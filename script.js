@@ -8,6 +8,13 @@ let createGrid = (color = "black", gridSize = 16) => {
         `height: ${550 / gridSize}px; width: ${550 / gridSize}px;`
       );
       container.appendChild(gridElement);
+
+      gridElement.addEventListener("mouseenter", (event) => {
+        gridElement.classList.add("hover");
+        if (color !== "black") {
+          gridElement.style.backgroundColor = color;
+        }
+      });
     }
   }
 };

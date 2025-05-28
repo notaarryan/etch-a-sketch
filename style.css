@@ -30,6 +30,10 @@ body {
     width: 550px;
 }
 
+.hover {
+    background-color: black;
+}
+
 .container .square {
     border: 1px solid black;
     box-sizing: border-box;
