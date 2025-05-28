@@ -26,14 +26,56 @@ let resetGridSize = (newGridSize) => {
   createGrid((gridSize = newGridSize));
 };
 
+let changeColor = (color = "black") => {
+  const testElement = document.createElement("div");
+  testElement.style.color = color;
+
+  if (testElement.style.color === "") {
+    console.warn(`"${color}" is not a valid CSS color.`);
+    return;
+  }
+
+  let squares = document.querySelectorAll(".square");
+  squares.forEach((square) => {
+    square.addEventListener("mouseenter", () => {
+      square.classList.add("hover");
+      square.style.backgroundColor = color;
+    });
+  });
+};
+
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+let changeToRgb = () => {
+  let squares = document.querySelectorAll(".square");
+  squares.forEach((square) => {
+    let color = getRandomColor();
+    square.addEventListener("mouseenter", () => {
+      square.classList.add("hover");
+      square.style.backgroundColor = color;
+    });
+  });
+};
+
 let gridSize = 16;
 let newGridSize = 0;
 const container = document.querySelector(".container");
 createGrid();
 const gridSizingButton = document.querySelector(".gridSizingButton");
+const colorChangingButton = document.querySelector(".changeColorButton");
+const rgbColorButton = document.querySelector(".rgbColorButton");
+const resetButton = document.querySelector(".resetButton");
+const eraserButton = document.querySelector(".eraserButton");
+
 gridSizingButton.addEventListener("click", () => {
   let newGridSize = parseInt(prompt("Enter grid size (Max: 100)"));
-  console.log(newGridSize);
 
   if (isNaN(newGridSize)) {
     alert("No input received");
@@ -44,4 +86,37 @@ gridSizingButton.addEventListener("click", () => {
     gridSize = newGridSize;
     newGridSize = 0;
   }
+});
+
+colorChangingButton.addEventListener("click", () => {
+  let newColor = prompt("Enter color");
+  if (newColor == "") {
+    alert("No input received");
+  } else {
+    changeColor(newColor);
+  }
+});
+
+rgbColorButton.addEventListener("click", () => {
+  changeToRgb();
+});
+
+resetButton.addEventListener("click", () => {
+  let squares = document.querySelectorAll(".square");
+  squares.forEach((square) => {
+    if (square.classList.contains("hover")) {
+      square.classList.remove("hover");
+      square.style.backgroundColor = "";
+    }
+  });
+});
+
+eraserButton.addEventListener("click", () => {
+  let squares = document.querySelectorAll(".square");
+  squares.forEach((square) => {
+    square.addEventListener("mouseenter", () => {
+      square.classList.remove("hover");
+      square.style.backgroundColor = "";
+    });
+  });
 });
